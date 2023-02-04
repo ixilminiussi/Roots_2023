@@ -48,10 +48,10 @@ func _process(_delta):
 
 # Called when the game starts.
 func start(pos):
+	print(pos)
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
-
 
 func _on_Player_area_entered(area):
 	var object_type = str(area)

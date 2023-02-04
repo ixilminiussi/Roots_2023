@@ -3,6 +3,7 @@ extends Node2D
 var carrot_import = preload("res://src/obj/Carrot.tscn")
 var bomb_import = preload("res://src/obj/Bomb.tscn")
 
+export var LEVEL = 1
 export var tile_size = 128
 
 signal overground
@@ -16,13 +17,13 @@ var state = 0 #0 for overground, 1 for underground
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Player.start($StartPosition.position)
 	randomize()
 	var example = range(0,45)
 	example.shuffle()
 	#Viewport.render_direct_to_screen = true
 	goal = 3 #goal to change based on 
 
-	$Player.start(Vector2(1*tile_size + 4*tile_size, 1*tile_size + 5*tile_size)) # Replace with function body.
 	#var ids = []			
 	var level_list = []
 	for _i in range(45):
@@ -53,6 +54,7 @@ func _ready():
 	#$map/CollisionShape2D.shape.extents = Vector2(4.5*tile_size, 2.5*tile_size)
 
 func start_game():
+	print(LEVEL)
 	$StartTimer.start()
 	$Player.start($StartPosition.position)
 	
