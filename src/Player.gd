@@ -15,7 +15,7 @@ func _ready():
 func _process(_delta):
 	var velocity = Vector2.ZERO # The player's movement vector.
 	
-	if get_parent().state and status == "alive":
+	if get_parent().state == "underground" and status == "alive":
 		$AnimatedSprite.animation = "underworld"
 		if Input.is_action_just_pressed("move_right"):
 			$AnimatedSprite.flip_h = true
@@ -48,12 +48,20 @@ func _process(_delta):
 
 # Called when the game starts.
 func start(pos):
-	print(pos)
+	status = "alive"
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
 
+
+# Called when the player is over another object
 func _on_Player_area_entered(area):
 	var object_type = str(area)
 	if (object_type.find("Bomb") >= 0):
-		status = "dead"
+		die()
+
+
+# Called when the player fucking dies
+func die():
+	status = "dead"
+	$DeathTimer.start()

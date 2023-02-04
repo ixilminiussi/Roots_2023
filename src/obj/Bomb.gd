@@ -14,12 +14,25 @@ func _ready():
 	
 	# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if (status != "exploded"):
+		if (get_parent().state == "underground"):
+			status = "hidden"
+		else:
+			status = "alive"
+
 	match status: 
 		"alive":
 			$AnimatedSprite.play("alive")
-		"explode":
+		"exploded":
 			$AnimatedSprite.play("explosion")
-			
+		"hidden":
+			$AnimatedSprite.play("hide")
+		
+		
+func clear():
+	queue_free()
+
+	
 func interact():
 	pass
 #func _on_Carrot_area_entered(area):

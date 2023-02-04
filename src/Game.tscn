@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/tilemap_ow.png" type="Texture" id=1]
 [ext_resource path="res://assets/tactical_John.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://assets/Jhon_blink.png" type="Texture" id=9]
 [ext_resource path="res://assets/tactical_john_blink.png" type="Texture" id=10]
 [ext_resource path="res://assets/dog.png" type="Texture" id=11]
+[ext_resource path="res://src/Levels.gd" type="Script" id=12]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap_ow.png 0"
@@ -105,6 +106,10 @@ position = Vector2( 64, 64 )
 scale = Vector2( 2, 2 )
 shape = SubResource( 2 )
 
+[node name="DeathTimer" type="Timer" parent="Player"]
+wait_time = 4.0
+one_shot = true
+
 [node name="StartPosition" type="Position2D" parent="."]
 position = Vector2( 640, 640 )
 
@@ -137,9 +142,17 @@ margin_right = 247.0
 margin_bottom = 84.0
 text = "Start"
 
+[node name="Levels" type="Node2D" parent="."]
+script = ExtResource( 12 )
+
+[node name="Goal" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+
 [connection signal="overground" from="." to="TileMap" method="overground"]
 [connection signal="underground" from="." to="TileMap" method="underground"]
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
+[connection signal="timeout" from="Player/DeathTimer" to="." method="start_game"]
 [connection signal="timeout" from="StartTimer" to="." method="underground"]
 [connection signal="timeout" from="StartTimer" to="HUD" method="_on_StartTimer_timeout"]
 [connection signal="start_game" from="HUD" to="." method="start_game"]

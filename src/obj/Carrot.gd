@@ -12,13 +12,26 @@ func _ready():
 	position.y = int(start_id/9) * tile_size + top_shift
 	
 	
-	# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if (status != "captured"):
+		if (get_parent().state == "underground"):
+			status = "hidden"
+		else:
+			status = "alive"
+
 	match status: 
 		"alive":
 			$AnimatedSprite.play("alive")
-		"dead":
-			$AnimatedSprite.play("hidden")
+		"captured":
+			$AnimatedSprite.play("check")
+		"hidden":
+			$AnimatedSprite.play("hide")
+
+
+func clear():
+	queue_free()
+
 
 func interact():
-	status = "dead"
+	status = "captured"
