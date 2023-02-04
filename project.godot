@@ -14,6 +14,13 @@ config/name="roots"
 run/main_scene="res://Level1.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=1408
+window/size/height=896
+window/size/test_width=1408
+window/size/test_height=896
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
