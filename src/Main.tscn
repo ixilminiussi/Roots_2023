@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://src/MainMenu/button_hover.tres" type="Texture" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://src/Viewport.gd" type="Script" id=7]
 [ext_resource path="res://src/tileset.tres" type="TileSet" id=8]
 [ext_resource path="res://src/MainMenu/button.tres" type="Texture" id=9]
+[ext_resource path="res://src/Draw.gd" type="Script" id=4]
+[ext_resource path="res://src/DeathSound.gd" type="Script" id=8]
+[ext_resource path="res://assets/sfx/death noise.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/dog.png" type="Texture" id=10]
 [ext_resource path="res://src/Levels.gd" type="Script" id=11]
 [ext_resource path="res://src/Main.gd" type="Script" id=12]
@@ -19,6 +22,60 @@
 [ext_resource path="res://assets/UI_spritesheet.png" type="Texture" id=17]
 [ext_resource path="res://src/TopTab.gd" type="Script" id=18]
 [ext_resource path="res://assets/fonts/ChalkRegular.tres" type="DynamicFont" id=19]
+[ext_resource path="res://assets/sfx/movement.wav" type="AudioStream" id=16]
+[ext_resource path="res://src/MoveSound.gd" type="Script" id=17]
+[ext_resource path="res://src/CarrotEaten.gd" type="Script" id=18]
+[ext_resource path="res://assets/sfx/carrot eaten.wav" type="AudioStream" id=19]
+[ext_resource path="res://src/moleSound.gd" type="Script" id=20]
+[ext_resource path="res://assets/music/levels_and_countdown_final.mp3" type="AudioStream" id=21]
+[ext_resource path="res://src/GameAudio.gd" type="Script" id=22]
+[ext_resource path="res://assets/sfx/mole sound.wav" type="AudioStream" id=23]
+[ext_resource path="res://src/DogEating.gd" type="Script" id=24]
+[ext_resource path="res://assets/sfx/dog eating.wav" type="AudioStream" id=25]
+
+[sub_resource type="TileSet" id=1]
+0/name = "tilemap_ow.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 512, 512 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tilemap_ow.png 1"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 512, 512, 512 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "tilemap_ow.png 2"
+2/texture = ExtResource( 2 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 1024, 512, 512 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
 
 [sub_resource type="AtlasTexture" id=6]
 flags = 4
@@ -100,9 +157,13 @@ animations = [ {
 "name": "default",
 "speed": 6.0
 } ]
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 576, 320 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 12 )
+current_level = 4
+LEVEL = 0
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2( 264, 220 )
@@ -145,7 +206,7 @@ anchor_mode = 0
 current = true
 
 [node name="StartTimer" type="Timer" parent="."]
-wait_time = 6.0
+wait_time = 10.0
 one_shot = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -264,19 +325,62 @@ script = ExtResource( 15 )
 [node name="OvergroundTexture" type="TextureRect" parent="DecorationsCanvas"]
 margin_right = 40.0
 margin_bottom = 40.0
+mouse_filter = 2
 texture = ExtResource( 13 )
 
 [node name="UndergroundTexture" type="TextureRect" parent="DecorationsCanvas"]
 margin_right = 40.0
 margin_bottom = 40.0
+mouse_filter = 2
 texture = ExtResource( 14 )
 
+[node name="Draw" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Draw"]
+position = Vector2( 836, 540 )
+shape = SubResource( 10 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -3.496
+script = ExtResource( 8 )
+
+[node name="MoveSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+script = ExtResource( 17 )
+
+[node name="CarrotEaten" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+script = ExtResource( 18 )
+
+[node name="MoleSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 23 )
+script = ExtResource( 20 )
+
+[node name="GameAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )
+volume_db = -6.992
+script = ExtResource( 22 )
+
+[node name="DogEating" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 25 )
+script = ExtResource( 24 )
+
+[connection signal="carrot_eaten" from="." to="CarrotEaten" method="_on_Main_carrot_eaten"]
+[connection signal="game_start" from="." to="GameAudio" method="_on_Main_game_start"]
+[connection signal="overground" from="." to="." method="_on_Main_overground"]
 [connection signal="overground" from="." to="TileMap" method="overground"]
 [connection signal="starting_timer" from="." to="HUD/TopTab" method="_on_Main_starting_timer"]
+[connection signal="underground" from="." to="." method="_on_Main_underground"]
 [connection signal="underground" from="." to="TileMap" method="underground"]
 [connection signal="win" from="." to="." method="_on_Main_win"]
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
+[connection signal="died" from="Player" to="DeathSound" method="_on_Player_died"]
+[connection signal="died_by_dog" from="Player" to="DogEating" method="_on_Player_died_by_dog"]
 [connection signal="moved" from="Player" to="." method="_on_Player_moved"]
+[connection signal="moved" from="Player" to="MoveSound" method="_on_Player_moved"]
+[connection signal="moved" from="Player" to="MoleSound" method="_on_Player_moved"]
 [connection signal="timeout" from="Player/DeathTimer" to="." method="start_game"]
 [connection signal="timeout" from="StartTimer" to="." method="underground"]
 [connection signal="timeout" from="StartTimer" to="HUD" method="_on_StartTimer_timeout"]
@@ -285,3 +389,5 @@ texture = ExtResource( 14 )
 [connection signal="pressed" from="HUD/StartButton" to="HUD" method="_on_StartButton_pressed"]
 [connection signal="pressed" from="HUD/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="pressed" from="HUD/NextButton" to="HUD/TopTab" method="_on_NextButton_pressed"]
+[connection signal="input_event" from="Draw" to="." method="_on_Draw_input_event"]
+[connection signal="input_event" from="Draw" to="Draw" method="_on_Draw_input_event"]

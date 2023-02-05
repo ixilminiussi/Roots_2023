@@ -6,6 +6,8 @@ export var tile_size = 128
 # var b = "text"
 var status = "alive"
 signal moved
+signal died
+signal died_by_dog
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,7 +39,7 @@ func _process(_delta):
 	var previous = position
 	position += velocity * tile_size
 	position.x = clamp(position.x, 264, 1288)
-	position.y = clamp(position.y, 264, 732)
+	position.y = clamp(position.y, 220, 732)
 	if (position - previous != Vector2.ZERO):
 		emit_signal("moved")
 	#if velocity.x != 0:
@@ -59,16 +61,21 @@ func start(pos):
 
 # Called when the player is over another object
 func _on_Player_area_entered(area):
+	print(area.position, position)
 	var object_type = str(area)
 	if (object_type.find("Bomb") >= 0):
-		die()
-	if (object_type.find("Dog") >= 0 and area.position == position):
-		die()
+		die(false)
+	if (object_type.find("Dog") >= 0 and (area.position - position)<Vector2(40,0)):
+		die(true)
 		
 
 
 
 # Called when the player fucking dies
-func die():
+func die(by_dog):
+	if by_dog:
+		emit_signal("died_by_dog")
+	else:
+		emit_signal("died")
 	status = "dead"
 	$DeathTimer.start()

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/splat sound effects (no copyright).mp3-ff1228a234469d63131c0d6bb56b2009.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/splat sound effects (no copyright).mp3"
+dest_files=[ "res://.import/splat sound effects (no copyright).mp3-ff1228a234469d63131c0d6bb56b2009.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

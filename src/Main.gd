@@ -4,7 +4,7 @@ var carrot_import = preload("res://src/obj/Carrot.tscn")
 var bomb_import = preload("res://src/obj/Bomb.tscn")
 var dog_import = preload("res://src/obj/Dog.tscn")
 
-var current_level = 0
+export(int) var current_level
 var level_list = []
 
 export var LEVEL = 1
@@ -14,6 +14,8 @@ signal overground
 signal underground
 signal win
 signal starting_timer
+signal carrot_eaten
+signal game_start
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -40,7 +42,10 @@ func start_game():
 	overground()
 	$StartTimer.start()
 	emit_signal("starting_timer")
+	emit_signal("game_start")
 	$Player.start($StartPosition.position)
+	goal = 0
+	
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,15 +55,16 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("cheat"):
 		if state == "overground":
-			state = "underground"
+			underground()
 		elif state == "underground":
-			state = "overground"
+			overground()
 
 	#carrot interaction
 	var objects = $Player.get_overlapping_areas()
 	if Input.is_action_just_pressed("interact"):
 		for obj in objects:
 			if (obj.get_name().find("Carrot") >= 0 and obj.status != "captured"):
+				emit_signal("carrot_eaten")
 				goal_c -= 1
 			obj.interact()
 			if (goal_c == 0):
@@ -128,3 +134,35 @@ func _on_NextButton_pressed():
 	start_game()
 	$HUD/NextButton.hide()
 	$HUD/NextButton/CanvasLayer.visible = false
+
+var chalk_import = preload("res://src/obj/Chalk.tscn")
+var drawing = false
+var radius = 100
+
+func _on_Draw_input_event(viewport, event, shape_idx):
+	if (state == "underground"):
+		if event is InputEventMouseButton:
+			if event.pressed:
+				drawing = true
+				var chalk = chalk_import.instance()
+				chalk.pos = event.position
+				chalk.rad = radius
+				$Draw.add_child(chalk)
+			else:
+				drawing = false
+		if event is InputEventMouseMotion:
+			if drawing:
+				var chalk = chalk_import.instance()
+				chalk.pos = event.position
+				chalk.rad = radius
+				$Draw.add_child(chalk)
+
+
+func _on_Main_overground():
+	var lines = $Draw.get_children()
+	for l in lines:
+		if str(l).find("Chalk") >= 0:
+			l.queue_free()
+
+
+

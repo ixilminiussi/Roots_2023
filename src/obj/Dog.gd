@@ -1,8 +1,8 @@
 extends Area2D
 
 var tile_size = 128
-var left_shift = 1*tile_size
-var top_shift = 1*tile_size
+var left_shift = 260
+var top_shift = 220
 # Called when the node enters the scene tree for the first time.
 var start_id = 0
 var direction = 1
@@ -38,8 +38,8 @@ func update_move():
 	print(previous, position)
 	position.x += direction*tile_size
 	print(previous, position)
-	position.x = clamp(position.x, tile_size, tile_size*9)
-	position.y = clamp(position.y, tile_size, tile_size*5)
+	position.x = clamp(position.x, left_shift, left_shift+tile_size*8)
+	position.y = clamp(position.y, top_shift, top_shift+tile_size*5)
 	if (position - previous == Vector2.ZERO):
 		direction *= -1
 		position.x += direction*tile_size
