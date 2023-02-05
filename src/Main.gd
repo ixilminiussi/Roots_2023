@@ -136,7 +136,7 @@ func _on_NextButton_pressed():
 	current_level += 1
 	if current_level >= 10:
 		emit_signal("game_completed")
-		get_tree().change_scene("res://src/MainMenu/EndScreen.tscn")
+		get_tree().change_scene("res://src/EndScreen.tscn")
 		
 	else:
 		start_game()
