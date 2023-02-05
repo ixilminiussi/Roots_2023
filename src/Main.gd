@@ -13,11 +13,13 @@ export var tile_size = 128
 signal overground
 signal underground
 signal win
+signal starting_timer
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 var goal = 0
+var goal_c = 0
 var win = false
 var state = "overground"
 
@@ -37,14 +39,14 @@ func start_game():
 	load_level(current_level)
 	overground()
 	$StartTimer.start()
+	emit_signal("starting_timer")
 	$Player.start($StartPosition.position)
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	$HUD.show_message(String(int($StartTimer.time_left) + 1))
-	$Goal.text = str(goal)
-	$Goal.show()
+	$HUD/TopTab/Goal/GoalLabel.set_text(str("gather ", goal_c, " out of ", goal, "\ncarrots"))
 	
 	if Input.is_action_just_pressed("cheat"):
 		if state == "overground":
@@ -57,9 +59,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("interact"):
 		for obj in objects:
 			if (obj.get_name().find("Carrot") >= 0 and obj.status != "captured"):
-				goal -= 1
+				goal_c -= 1
 			obj.interact()
-			if (goal == 0):
+			if (goal_c == 0):
 				emit_signal("win")
 	#if (goal)
 
@@ -105,6 +107,7 @@ func load_level(level):
 				var dog = dog_import.instance()
 				dog.start_id = pos
 				add_child(dog)
+	goal_c = goal
 
 
 func _on_Player_moved():
@@ -117,9 +120,11 @@ func _on_Player_moved():
 
 func _on_Main_win():
 	$HUD/NextButton.show()
+	$HUD/NextButton/CanvasLayer.visible = true
 
 
 func _on_NextButton_pressed():
 	current_level += 1
 	start_game()
 	$HUD/NextButton.hide()
+	$HUD/NextButton/CanvasLayer.visible = false
