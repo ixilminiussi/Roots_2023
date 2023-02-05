@@ -36,8 +36,8 @@ func _process(_delta):
 	
 	var previous = position
 	position += velocity * tile_size
-	position.x = clamp(position.x, 128, 1152)
-	position.y = clamp(position.y, 128, 640)
+	position.x = clamp(position.x, 264, 1288)
+	position.y = clamp(position.y, 264, 732)
 	if (position - previous != Vector2.ZERO):
 		emit_signal("moved")
 	#if velocity.x != 0:

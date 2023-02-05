@@ -1,8 +1,8 @@
 extends Area2D
 
 var tile_size = 128
-var left_shift = 1*tile_size
-var top_shift = 1*tile_size
+var left_shift = 264
+var top_shift = 220
 # Called when the node enters the scene tree for the first time.
 var start_id = 0
 var status = "alive"
