@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/addons/MainMenu/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://src/addons/MainMenu/ColorRect.gd" type="Script" id=2]
+[ext_resource path="res://assets/music/home screen tune.wav" type="AudioStream" id=3]
+[ext_resource path="res://src/addons/MainMenu/Start.gd" type="Script" id=4]
+[ext_resource path="res://src/addons/MainMenu/AudioStreamPlayer.gd" type="Script" id=5]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1408.0
+margin_bottom = 896.0
+color = Color( 0.372549, 0.670588, 0.0705882, 1 )
+script = ExtResource( 2 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1408, 896 )
+
+[node name="Camera2D" type="Camera2D" parent="Viewport"]
+
+[node name="Begin" type="Button" parent="."]
+anchor_right = 1.0
+margin_left = 97.0
+margin_top = 390.0
+margin_right = -1262.0
+margin_bottom = 410.0
+rect_scale = Vector2( 5.66803, 5.07437 )
+text = "Begin"
+script = ExtResource( 4 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+script = ExtResource( 5 )
+
+[connection signal="pressed" from="Begin" to="." method="_on_Begin_pressed"]
+[connection signal="pressed" from="Begin" to="." method="_on_Start_pressed"]
