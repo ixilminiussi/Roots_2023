@@ -47,6 +47,10 @@ func start_game():
 	$HUD/Title.hide()
 	$HUD/Tutorial.hide()
 	$HUD/TopTab/Goal/GoalLabel.hide()
+	$HUD/Explainer.hide()
+	$HUD/Explainer/CarrotLabel.hide()
+	$HUD/Explainer/DogLabel.hide()
+	$HUD/Explainer/MineLabel.hide()
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -66,6 +70,7 @@ func _process(_delta):
 		for obj in objects:
 			if (obj.get_name().find("Carrot") >= 0 and obj.status != "captured"):
 				emit_signal("carrot_eaten")
+				_on_Player_moved()
 				goal_c -= 1
 			obj.interact()
 			if (goal_c == 0):
@@ -134,43 +139,43 @@ func _on_Main_win():
 
 func _on_NextButton_pressed():
 	current_level += 1
-	if current_level >= 10:
+	if current_level >= 11:
 		emit_signal("game_completed")
 		get_tree().change_scene("res://src/EndScreen.tscn")
-		
 	else:
 		start_game()
 	$HUD/NextButton.hide()
 	$HUD/NextButton/CanvasLayer.visible = false
 
-var chalk_import = preload("res://src/obj/Chalk.tscn")
 var drawing = false
 var radius = 100
+var active_line = null
+var line_width = 5
+var line_color = Color.white
+
 
 func _on_Draw_input_event(_viewport, event, _shape_idx):
 	if (state == "underground"):
 		if event is InputEventMouseButton:
 			if event.pressed:
 				drawing = true
-				var chalk = chalk_import.instance()
-				chalk.pos = event.position
-				chalk.rad = radius
-				$Draw.add_child(chalk)
+				active_line = Line2D.new()
+				active_line.default_color = line_color
+				active_line.width = line_width
+				$Draw.add_child(active_line)
 			else:
 				drawing = false
 		if event is InputEventMouseMotion:
 			if drawing:
-				var chalk = chalk_import.instance()
-				chalk.pos = event.position
-				chalk.rad = radius
-				$Draw.add_child(chalk)
+				active_line.add_point(event.position)
 
 
 func _on_Main_overground():
 	var lines = $Draw.get_children()
 	for l in lines:
-		if str(l).find("Chalk") >= 0:
+		if str(l.get_class()) == "Line2D":
 			l.queue_free()
+			active_line = null
 
 
 

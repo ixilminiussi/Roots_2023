@@ -1,7 +1,7 @@
 extends Area2D
 
 var tile_size = 128
-var left_shift = 260
+var left_shift = 264
 var top_shift = 220
 # Called when the node enters the scene tree for the first time.
 var start_id = 0
@@ -54,5 +54,6 @@ func interact():
 
 func _on_Dog_area_entered(area):
 	var object_type = str(area)
-	if (object_type.find("Bomb") >= 0 or object_type.find("Carrot") >= 0):
+	if (object_type.find("Bomb") >= 0) or (object_type.find("Carrot") >= 0 and area.checkeredmuch != "checked"):
 		direction *= -1
+		position.x += direction*tile_size*2
