@@ -24,7 +24,6 @@ var state = "overground"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Player.start($StartPosition.position)
-	
 	#map to center
 	#$map.position =Vector2((3 * tile_size + 4.5 * tile_size), (2 * tile_size + 2.5
 	# * tile_size))
@@ -48,9 +47,9 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("cheat"):
 		if state == "overground":
-			state = "underground"
+			underground()
 		elif state == "underground":
-			state = "overground"
+			overground()
 
 	#carrot interaction
 	var objects = $Player.get_overlapping_areas()
@@ -123,3 +122,32 @@ func _on_NextButton_pressed():
 	current_level += 1
 	start_game()
 	$HUD/NextButton.hide()
+
+var chalk_import = preload("res://src/obj/Chalk.tscn")
+var drawing = false
+var radius = 100
+
+func _on_Draw_input_event(viewport, event, shape_idx):
+	if (state == "underground"):
+		if event is InputEventMouseButton:
+			if event.pressed:
+				drawing = true
+				var chalk = chalk_import.instance()
+				chalk.pos = event.position
+				chalk.rad = radius
+				$DrawLayer/Draw.add_child(chalk)
+			else:
+				drawing = false
+		if event is InputEventMouseMotion:
+			if drawing:
+				var chalk = chalk_import.instance()
+				chalk.pos = event.position
+				chalk.rad = radius
+				$DrawLayer/Draw.add_child(chalk)
+
+
+func _on_Main_overground():
+	var lines = $DrawLayer/Draw.get_children()
+	for l in lines:
+		if str(l).find("Chalk") >= 0:
+			l.queue_free()

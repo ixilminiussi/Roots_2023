@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilemap_ow.png" type="Texture" id=2]
 [ext_resource path="res://assets/john_spritesheet.png" type="Texture" id=3]
+[ext_resource path="res://src/Draw.gd" type="Script" id=4]
 [ext_resource path="res://src/TileMap.gd" type="Script" id=5]
 [ext_resource path="res://src/HUD.gd" type="Script" id=6]
 [ext_resource path="res://src/Viewport.gd" type="Script" id=7]
@@ -100,6 +101,9 @@ extents = Vector2( 32, 32 )
 
 [sub_resource type="World" id=5]
 
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 576, 320 )
+
 [node name="Main" type="Node2D"]
 script = ExtResource( 12 )
 
@@ -144,7 +148,7 @@ anchor_mode = 0
 current = true
 
 [node name="StartTimer" type="Timer" parent="."]
-wait_time = 6.0
+wait_time = 2.0
 one_shot = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -189,6 +193,17 @@ margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 14 )
 
+[node name="DrawLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="Draw" type="Area2D" parent="DrawLayer"]
+position = Vector2( 836, 540 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DrawLayer/Draw"]
+shape = SubResource( 10 )
+
+[connection signal="overground" from="." to="." method="_on_Main_overground"]
 [connection signal="overground" from="." to="TileMap" method="overground"]
 [connection signal="underground" from="." to="TileMap" method="underground"]
 [connection signal="win" from="." to="." method="_on_Main_win"]
@@ -200,3 +215,5 @@ texture = ExtResource( 14 )
 [connection signal="start_game" from="HUD" to="." method="start_game"]
 [connection signal="pressed" from="HUD/StartButton" to="HUD" method="_on_StartButton_pressed"]
 [connection signal="pressed" from="HUD/NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="input_event" from="DrawLayer/Draw" to="." method="_on_Draw_input_event"]
+[connection signal="input_event" from="DrawLayer/Draw" to="DrawLayer/Draw" method="_on_Draw_input_event"]
