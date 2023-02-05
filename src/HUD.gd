@@ -1,7 +1,10 @@
 extends CanvasLayer
 
 signal start_game
-
+func _ready():
+	$NextButton.hide()
+	
+	
 func _process(delta):
 	if Input.is_action_just_pressed("button_press"):
 		$StartButton.emit_signal("pressed")

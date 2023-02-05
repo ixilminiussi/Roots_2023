@@ -116,5 +116,10 @@ func _on_Player_moved():
 
 
 func _on_Main_win():
+	$HUD/NextButton.show()
+
+
+func _on_NextButton_pressed():
 	current_level += 1
 	start_game()
+	$HUD/NextButton.hide()
