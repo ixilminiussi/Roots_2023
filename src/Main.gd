@@ -44,7 +44,9 @@ func start_game():
 	emit_signal("starting_timer")
 	emit_signal("game_start")
 	$Player.start($StartPosition.position)	
-	
+	$HUD/Title.hide()
+	$HUD/Tutorial.hide()
+	$HUD/TopTab/Goal/GoalLabel.hide()
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
