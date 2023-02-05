@@ -4,7 +4,7 @@ var carrot_import = preload("res://src/obj/Carrot.tscn")
 var bomb_import = preload("res://src/obj/Bomb.tscn")
 var dog_import = preload("res://src/obj/Dog.tscn")
 
-var current_level = 0
+export(int) var current_level
 var level_list = []
 
 export var LEVEL = 1
@@ -13,6 +13,8 @@ export var tile_size = 128
 signal overground
 signal underground
 signal win
+signal carrot_eaten
+signal game_start
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -24,6 +26,7 @@ var state = "overground"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Player.start($StartPosition.position)
+	
 	#map to center
 	#$map.position =Vector2((3 * tile_size + 4.5 * tile_size), (2 * tile_size + 2.5
 	# * tile_size))
@@ -36,7 +39,10 @@ func start_game():
 	load_level(current_level)
 	overground()
 	$StartTimer.start()
+	emit_signal("game_start")
 	$Player.start($StartPosition.position)
+	goal = 0
+	
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -56,6 +62,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("interact"):
 		for obj in objects:
 			if (obj.get_name().find("Carrot") >= 0 and obj.status != "captured"):
+				emit_signal("carrot_eaten")
 				goal -= 1
 			obj.interact()
 			if (goal == 0):
@@ -135,7 +142,7 @@ func _on_Draw_input_event(viewport, event, shape_idx):
 				var chalk = chalk_import.instance()
 				chalk.pos = event.position
 				chalk.rad = radius
-				$DrawLayer/Draw.add_child(chalk)
+				$Draw.add_child(chalk)
 			else:
 				drawing = false
 		if event is InputEventMouseMotion:
@@ -143,11 +150,14 @@ func _on_Draw_input_event(viewport, event, shape_idx):
 				var chalk = chalk_import.instance()
 				chalk.pos = event.position
 				chalk.rad = radius
-				$DrawLayer/Draw.add_child(chalk)
+				$Draw.add_child(chalk)
 
 
 func _on_Main_overground():
-	var lines = $DrawLayer/Draw.get_children()
+	var lines = $Draw.get_children()
 	for l in lines:
 		if str(l).find("Chalk") >= 0:
 			l.queue_free()
+
+
+
