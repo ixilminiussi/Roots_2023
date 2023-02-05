@@ -35,3 +35,5 @@ func clear():
 
 func interact():
 	status = "captured"
+func update_move():
+	pass

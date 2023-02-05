@@ -2,6 +2,7 @@ extends Node2D
 
 var carrot_import = preload("res://src/obj/Carrot.tscn")
 var bomb_import = preload("res://src/obj/Bomb.tscn")
+var dog_import = preload("res://src/obj/Dog.tscn")
 
 var current_level = 0
 var level_list = []
@@ -92,3 +93,15 @@ func load_level(level):
 				var bomb = bomb_import.instance()
 				bomb.start_id = pos
 				add_child(bomb)
+			3:
+				var dog = dog_import.instance()
+				dog.start_id = pos
+				add_child(dog)
+
+
+func _on_Player_moved():
+	var root_node = get_tree().get_root()
+	var node_list = root_node.get_children()[0].get_children()
+	for node in node_list:
+		if (str(node.get_class()) == "Area2D" and node.get_name() != "Player"):
+			node.update_move()

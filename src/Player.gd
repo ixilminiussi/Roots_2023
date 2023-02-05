@@ -5,6 +5,7 @@ export var tile_size = 128
 # var a = 2
 # var b = "text"
 var status = "alive"
+signal moved
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,11 +33,13 @@ func _process(_delta):
 		
 	if status == "dead":
 		$AnimatedSprite.animation = "dead"
-
+	
+	var previous = position
 	position += velocity * tile_size
 	position.x = clamp(position.x, 128, 1152)
 	position.y = clamp(position.y, 128, 640)
-
+	if (position - previous != Vector2.ZERO):
+		emit_signal("moved")
 	#if velocity.x != 0:
 	#	$AnimatedSprite.animation = "carrot"
 	#	$AnimatedSprite.flip_v = false
@@ -57,8 +60,9 @@ func start(pos):
 # Called when the player is over another object
 func _on_Player_area_entered(area):
 	var object_type = str(area)
-	if (object_type.find("Bomb") >= 0):
+	if (object_type.find("Bomb") >= 0 or object_type.find("Dog") >= 0):
 		die()
+
 
 
 # Called when the player fucking dies

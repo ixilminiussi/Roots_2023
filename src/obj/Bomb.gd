@@ -31,10 +31,10 @@ func _process(_delta):
 		
 func clear():
 	queue_free()
-
 	
 func interact():
 	pass
 #func _on_Carrot_area_entered(area):
 #	print("eating!")
-
+func update_move():
+	pass
