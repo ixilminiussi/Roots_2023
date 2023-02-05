@@ -378,7 +378,7 @@ margin_top = 168.0
 margin_right = 901.0
 margin_bottom = 400.0
 custom_fonts/font = ExtResource( 32 )
-text = "Eat all the carrots to beat the level."
+text = "Eat all the carrots (press E) to beat the level."
 autowrap = true
 
 [node name="MineLabel" type="Label" parent="HUD/Explainer"]
