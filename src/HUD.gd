@@ -9,7 +9,7 @@ func _ready():
 	$NextButton/CanvasLayer.visible = false
 	
 	
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("button_press"):
 		$StartButton.emit_signal("pressed")
 	pass

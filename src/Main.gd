@@ -43,8 +43,7 @@ func start_game():
 	$StartTimer.start()
 	emit_signal("starting_timer")
 	emit_signal("game_start")
-	$Player.start($StartPosition.position)
-	goal = 0
+	$Player.start($StartPosition.position)	
 	
 	
 	
@@ -98,6 +97,8 @@ func load_level(level):
 		if (level == i):
 			level_list = $Levels.levels[i]
 	
+	goal = 0
+	
 	for pos in level_list.size():
 		match level_list[pos]:
 			1:
@@ -139,7 +140,7 @@ var chalk_import = preload("res://src/obj/Chalk.tscn")
 var drawing = false
 var radius = 100
 
-func _on_Draw_input_event(viewport, event, shape_idx):
+func _on_Draw_input_event(_viewport, event, _shape_idx):
 	if (state == "underground"):
 		if event is InputEventMouseButton:
 			if event.pressed:

@@ -1,15 +1,12 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://src/MainMenu/button_hover.tres" type="Texture" id=2]
 [ext_resource path="res://assets/john_spritesheet.png" type="Texture" id=3]
-[ext_resource path="res://assets/fonts/ChalkBig.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/Draw.gd" type="Script" id=4]
 [ext_resource path="res://src/TileMap.gd" type="Script" id=5]
 [ext_resource path="res://src/HUD.gd" type="Script" id=6]
 [ext_resource path="res://src/Viewport.gd" type="Script" id=7]
-[ext_resource path="res://src/tileset.tres" type="TileSet" id=8]
-[ext_resource path="res://src/MainMenu/button.tres" type="Texture" id=9]
-[ext_resource path="res://src/Draw.gd" type="Script" id=4]
 [ext_resource path="res://src/DeathSound.gd" type="Script" id=8]
 [ext_resource path="res://assets/sfx/death noise.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/dog.png" type="Texture" id=10]
@@ -21,10 +18,6 @@
 [ext_resource path="res://src/MainMenu/top_tab.tres" type="Texture" id=16]
 [ext_resource path="res://assets/UI_spritesheet.png" type="Texture" id=17]
 [ext_resource path="res://src/TopTab.gd" type="Script" id=18]
-[ext_resource path="res://assets/fonts/ChalkRegular.tres" type="DynamicFont" id=19]
-[ext_resource path="res://assets/sfx/movement.wav" type="AudioStream" id=16]
-[ext_resource path="res://src/MoveSound.gd" type="Script" id=17]
-[ext_resource path="res://src/CarrotEaten.gd" type="Script" id=18]
 [ext_resource path="res://assets/sfx/carrot eaten.wav" type="AudioStream" id=19]
 [ext_resource path="res://src/moleSound.gd" type="Script" id=20]
 [ext_resource path="res://assets/music/levels_and_countdown_final.mp3" type="AudioStream" id=21]
@@ -32,10 +25,18 @@
 [ext_resource path="res://assets/sfx/mole sound.wav" type="AudioStream" id=23]
 [ext_resource path="res://src/DogEating.gd" type="Script" id=24]
 [ext_resource path="res://assets/sfx/dog eating.wav" type="AudioStream" id=25]
+[ext_resource path="res://assets/tilemap_uw.png" type="Texture" id=26]
+[ext_resource path="res://src/MainMenu/button.tres" type="Texture" id=27]
+[ext_resource path="res://src/CarrotEaten.gd" type="Script" id=28]
+[ext_resource path="res://assets/fonts/ChalkBig.tres" type="DynamicFont" id=29]
+[ext_resource path="res://assets/tilemap_ow.png" type="Texture" id=30]
+[ext_resource path="res://assets/sfx/movement.wav" type="AudioStream" id=31]
+[ext_resource path="res://assets/fonts/ChalkRegular.tres" type="DynamicFont" id=32]
+[ext_resource path="res://src/MoveSound.gd" type="Script" id=33]
 
-[sub_resource type="TileSet" id=1]
+[sub_resource type="TileSet" id=23]
 0/name = "tilemap_ow.png 0"
-0/texture = ExtResource( 2 )
+0/texture = ExtResource( 30 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 512, 512 )
@@ -49,7 +50,7 @@
 0/shapes = [  ]
 0/z_index = 0
 1/name = "tilemap_ow.png 1"
-1/texture = ExtResource( 2 )
+1/texture = ExtResource( 30 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 512, 512, 512 )
@@ -63,7 +64,7 @@
 1/shapes = [  ]
 1/z_index = 0
 2/name = "tilemap_ow.png 2"
-2/texture = ExtResource( 2 )
+2/texture = ExtResource( 30 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 1024, 512, 512 )
@@ -120,43 +121,60 @@ extents = Vector2( 32, 32 )
 
 [sub_resource type="World" id=5]
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="TileSet" id=22]
+0/name = "tilemap_uw.png 0"
+0/texture = ExtResource( 26 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 512, 512 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="AtlasTexture" id=24]
 flags = 4
 atlas = ExtResource( 17 )
 region = Rect2( 0, 200, 200, 200 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=25]
 flags = 4
 atlas = ExtResource( 17 )
 region = Rect2( 200, 200, 200, 200 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=26]
 flags = 4
 atlas = ExtResource( 17 )
 region = Rect2( 400, 200, 200, 200 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=27]
 flags = 4
 atlas = ExtResource( 17 )
 region = Rect2( 600, 200, 200, 200 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=28]
 flags = 4
 atlas = ExtResource( 17 )
 region = Rect2( 800, 200, 200, 200 )
 
-[sub_resource type="AtlasTexture" id=21]
+[sub_resource type="AtlasTexture" id=29]
 flags = 4
 atlas = ExtResource( 17 )
 region = Rect2( 800, 400, 200, 200 )
 
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
+"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
 "loop": true,
 "name": "default",
 "speed": 6.0
 } ]
+
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 576, 320 )
 
@@ -168,7 +186,7 @@ LEVEL = 0
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2( 264, 220 )
 scale = Vector2( 0.25, 0.25 )
-tile_set = ExtResource( 8 )
+tile_set = SubResource( 23 )
 cell_size = Vector2( 512, 512 )
 cell_quadrant_size = 64
 format = 1
@@ -210,50 +228,50 @@ wait_time = 10.0
 one_shot = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
-layer = 3
+layer = 2
 script = ExtResource( 6 )
-
-[node name="StartButton" type="TextureButton" parent="HUD"]
-margin_left = 53.0
-margin_top = 140.0
-margin_right = 453.0
-margin_bottom = 340.0
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 2 )
-texture_hover = ExtResource( 2 )
-
-[node name="CanvasLayer" type="CanvasLayer" parent="HUD/StartButton"]
-layer = 4
-
-[node name="StartButtonLabel" type="Label" parent="HUD/StartButton/CanvasLayer"]
-margin_left = 50.0
-margin_top = 140.0
-margin_right = 442.0
-margin_bottom = 334.0
-custom_fonts/font = ExtResource( 4 )
-text = "Start"
-align = 1
-valign = 1
 
 [node name="NextButton" type="TextureButton" parent="HUD"]
 margin_left = 1223.0
 margin_top = 788.0
 margin_right = 1623.0
 margin_bottom = 988.0
-texture_normal = ExtResource( 9 )
+texture_normal = ExtResource( 27 )
 texture_pressed = ExtResource( 2 )
 texture_hover = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="HUD/NextButton"]
-layer = 4
+layer = 5
 
 [node name="NextButtonLabel" type="Label" parent="HUD/NextButton/CanvasLayer"]
 margin_left = 1228.0
 margin_top = 797.0
 margin_right = 1612.0
 margin_bottom = 973.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 29 )
 text = "Next"
+align = 1
+valign = 1
+
+[node name="StartButton" type="TextureButton" parent="HUD"]
+margin_left = 53.0
+margin_top = 140.0
+margin_right = 453.0
+margin_bottom = 340.0
+texture_normal = ExtResource( 27 )
+texture_pressed = ExtResource( 2 )
+texture_hover = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="HUD/StartButton"]
+layer = 5
+
+[node name="StartButtonLabel" type="Label" parent="HUD/StartButton/CanvasLayer"]
+margin_left = 50.0
+margin_top = 140.0
+margin_right = 442.0
+margin_bottom = 334.0
+custom_fonts/font = ExtResource( 29 )
+text = "Start"
 align = 1
 valign = 1
 
@@ -263,14 +281,15 @@ layer = 2
 [node name="sideTab" type="TileMap" parent="HUD/SideTab"]
 scale = Vector2( 0.25, 0.25 )
 z_index = 1
-tile_set = ExtResource( 8 )
+tile_set = SubResource( 22 )
 cell_size = Vector2( 512, 512 )
 format = 1
-tile_data = PoolIntArray( 0, 3, 0, 1, 3, 0, 2, 3, 0, 3, 3, 0, 65536, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 65554, 0, 0, 131072, 3, 0, 131073, 3, 0, 131074, 3, 0, 131075, 3, 0, 196608, 3, 0, 196609, 3, 0, 196610, 3, 0, 196611, 3, 0, 262144, 3, 0, 262145, 3, 0, 262146, 3, 0, 262147, 3, 0, 327680, 3, 0, 327681, 3, 0, 327682, 3, 0, 327683, 3, 0, 393216, 3, 0, 393217, 3, 0, 393218, 3, 0, 393219, 3, 0, 458752, 3, 0, 458753, 3, 0, 458754, 3, 0, 458755, 3, 0, 524288, 3, 0, 524289, 3, 0, 524290, 3, 0, 524291, 3, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0 )
 
 [node name="ColorRect" type="ColorRect" parent="HUD/SideTab"]
 margin_right = 523.0
 margin_bottom = 1151.0
+mouse_filter = 2
 
 [node name="TopTab" type="CanvasLayer" parent="HUD"]
 layer = 2
@@ -285,7 +304,7 @@ margin_top = -61.0
 margin_right = 999.0
 margin_bottom = 193.0
 rect_scale = Vector2( 1.1788, 1.1788 )
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 29 )
 align = 1
 valign = 1
 
@@ -303,7 +322,7 @@ margin_left = 566.0
 margin_top = -2.0
 margin_right = 1072.0
 margin_bottom = 169.0
-custom_fonts/font = ExtResource( 19 )
+custom_fonts/font = ExtResource( 32 )
 align = 1
 valign = 1
 autowrap = true
@@ -347,12 +366,12 @@ volume_db = -3.496
 script = ExtResource( 8 )
 
 [node name="MoveSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 16 )
-script = ExtResource( 17 )
+stream = ExtResource( 31 )
+script = ExtResource( 33 )
 
 [node name="CarrotEaten" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )
-script = ExtResource( 18 )
+script = ExtResource( 28 )
 
 [node name="MoleSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 23 )
@@ -386,8 +405,8 @@ script = ExtResource( 24 )
 [connection signal="timeout" from="StartTimer" to="HUD" method="_on_StartTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="HUD/TopTab" method="_on_StartTimer_timeout"]
 [connection signal="start_game" from="HUD" to="." method="start_game"]
-[connection signal="pressed" from="HUD/StartButton" to="HUD" method="_on_StartButton_pressed"]
 [connection signal="pressed" from="HUD/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="pressed" from="HUD/NextButton" to="HUD/TopTab" method="_on_NextButton_pressed"]
+[connection signal="pressed" from="HUD/StartButton" to="HUD" method="_on_StartButton_pressed"]
 [connection signal="input_event" from="Draw" to="." method="_on_Draw_input_event"]
 [connection signal="input_event" from="Draw" to="Draw" method="_on_Draw_input_event"]
