@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/home screen tune.mp3-2f86b6e2187c43601bc53e205c22fca8.mp3str"
+
+[deps]
+
+source_file="res://assets/music/home screen tune.mp3"
+dest_files=[ "res://.import/home screen tune.mp3-2f86b6e2187c43601bc53e205c22fca8.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

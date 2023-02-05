@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/levels_and_countdown_final.mp3-662ab83c4981f92b7b4c4e2dd26196bf.mp3str"
+
+[deps]
+
+source_file="res://assets/music/levels_and_countdown_final.mp3"
+dest_files=[ "res://.import/levels_and_countdown_final.mp3-662ab83c4981f92b7b4c4e2dd26196bf.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
