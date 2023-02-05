@@ -12,11 +12,13 @@ export var tile_size = 128
 
 signal overground
 signal underground
+signal win
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 var goal = 0
+var win = false
 var state = "overground"
 
 # Called when the node enters the scene tree for the first time.
@@ -54,7 +56,12 @@ func _process(_delta):
 	var objects = $Player.get_overlapping_areas()
 	if Input.is_action_just_pressed("interact"):
 		for obj in objects:
+			if (obj.get_name().find("Carrot") >= 0 and obj.status != "captured"):
+				goal -= 1
 			obj.interact()
+			if (goal == 0):
+				emit_signal("win")
+	#if (goal)
 
 func overground():
 	state = "overground"
@@ -72,7 +79,8 @@ func clear_stage():
 	print(node_list)
 	for node in node_list:
 		var object_type = str(node)
-		if object_type.find("Bomb") >= 0 or object_type.find("Carrot") >= 0:
+		if (object_type.find("Bomb") >= 0 or object_type.find("Carrot") >= 0 
+		or object_type.find("Dog") >= 0):
 			node.clear()
 
 
@@ -105,3 +113,8 @@ func _on_Player_moved():
 	for node in node_list:
 		if (str(node.get_class()) == "Area2D" and node.get_name() != "Player"):
 			node.update_move()
+
+
+func _on_Main_win():
+	current_level += 1
+	start_game()

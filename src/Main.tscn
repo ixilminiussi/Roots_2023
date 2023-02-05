@@ -123,7 +123,7 @@ anchor_mode = 0
 current = true
 
 [node name="StartTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 6.0
 one_shot = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -151,6 +151,7 @@ margin_bottom = 14.0
 
 [connection signal="overground" from="." to="TileMap" method="overground"]
 [connection signal="underground" from="." to="TileMap" method="underground"]
+[connection signal="win" from="." to="." method="_on_Main_win"]
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
 [connection signal="moved" from="Player" to="." method="_on_Player_moved"]
 [connection signal="timeout" from="Player/DeathTimer" to="." method="start_game"]

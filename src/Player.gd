@@ -60,8 +60,11 @@ func start(pos):
 # Called when the player is over another object
 func _on_Player_area_entered(area):
 	var object_type = str(area)
-	if (object_type.find("Bomb") >= 0 or object_type.find("Dog") >= 0):
+	if (object_type.find("Bomb") >= 0):
 		die()
+	if (object_type.find("Dog") >= 0 and area.position == position):
+		die()
+		
 
 
 
